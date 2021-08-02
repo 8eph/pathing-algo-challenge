@@ -1,0 +1,19 @@
+{
+  "name": "pathing",
+  "version": "1.0.0",
+  "description": "Pathing algorithm code challenge",
+  "main": "main.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "app": "node src/pathApp.js",
+    "test": "jest",
+    "lint": "standard src/*.js src/**/*.js"
+  },
+  "author": "Filip B",
+  "license": "MIT",
+  "devDependencies": {
+    "jest": "^27.0.6"
+  }
+}

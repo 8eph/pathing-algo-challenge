@@ -14,7 +14,7 @@ Cons:
 - no unit tests due to time constraints, took ~5 days (on and off) to finish
 - class vs pure object initialization and usage
 
-Open question(s)
+Open question(s):
 - naming conventions - camelcase, snake case, when and where. I've found that this varies wildly per organization so I've aimed for internal consistency.
 - linting standards, same as above
 - package management / transpiler standard

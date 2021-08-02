@@ -10,6 +10,9 @@ Map.prototype.adjacentPoints = function (point) {
   const x = point.x
   const y = point.y
 
+  /**
+   * Shortening this type of code would make it less readable, so kept it as-is.
+   */
   const leftAdjacent = this.findPointByCoordinates(x - 1, y)
   if (leftAdjacent) {
     adjacentPointList.push(leftAdjacent)
@@ -33,6 +36,9 @@ Map.prototype.adjacentPoints = function (point) {
   return adjacentPointList
 }
 
+/**
+ * 1d array find. Not fast by any means.
+**/
 Map.prototype.findPointByCoordinates = function (x, y) {
   return this.map.find(point => point.x === x && point.y === y) || null
 }

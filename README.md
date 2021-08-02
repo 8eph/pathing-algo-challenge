@@ -2,7 +2,17 @@ This project was built with Node 16.4.1 and NPM 7.18.1.
 
 While it should work with many other recent versions, this has not been tested.
 
-Unit tests are conspicuously missing due to time constraints, took ~5 days (on and off) to finish.
+Pros:
+- integration tests passing
+- the main loop is straight-forward / readable
+- sensible naming convention (hopefully)
+- little matrix arithmetic
+  
+Cons:
+- while passing, test case 10 is problematic as the the end markers are validated at map load
+- performance considerations for very large maps (not among the test cases)
+- no unit tests due to time constraints, took ~5 days (on and off) to finish
+- class vs pure object initialization and usage
 
 # Installation
 ```

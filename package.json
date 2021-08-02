@@ -9,7 +9,7 @@
   "scripts": {
     "app": "node src/pathApp.js",
     "test": "jest",
-    "lint": "standard src/*.js src/**/*.js"
+    "lint": "standard src/ --fix"
   },
   "author": "Filip B",
   "license": "MIT",

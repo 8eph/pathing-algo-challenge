@@ -31,16 +31,25 @@ function loadRawStringMap (file) {
   const pathToFile = path.join(baseDir, '/', file)
 
   fs.access(pathToFile, fs.R_OK, err => {
-    if (err) { throw Error('Path not found') }
+    if (err) {
+      throw Error('Path not found')
+    }
   })
 
   const rawStringMap = fs.readFileSync(pathToFile, 'UTF8', (err) => {
-    if (err) { throw Error('Could not read file') }
+    if (err) {
+      throw Error('Could not read file')
+    }
   })
 
   return rawStringMap
 }
 
+/**
+ * Convert the map into an array of points.
+ * Count startpoints and endpoints while we're already iterating through the whole thing.
+ * Pass the startPoint, once it's detected, to the Map object.
+ */
 function initializeMap (rawStringMap) {
   const lines = rawStringMap.split(/\r?\n/)
 

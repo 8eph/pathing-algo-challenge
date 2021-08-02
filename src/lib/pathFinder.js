@@ -2,12 +2,13 @@ const { valuesFromPoints } = require('./outputFormatter')
 const Point = require('./point')
 
 let currentPoint
+// used to simplify the initial traverse step, all it matters is that it's not the same
 let previousPoint = new Point(-9999, -9999, null)
-let _map
+let map
 let direction
 
-function findPath (map) {
-  _map = map
+function findPath (mapObject) {
+  map = mapObject
 
   initializeStartPoint()
 
@@ -16,14 +17,17 @@ function findPath (map) {
   }
 
   return [
-    valuesFromPoints(_map.traversedLetters),
-    valuesFromPoints(_map.traversedPoints)
+    valuesFromPoints(map.traversedLetters),
+    valuesFromPoints(map.traversedPoints)
   ]
 }
 
+/**
+ * Traverse start point and set initial direction.
+ */
 function initializeStartPoint () {
-  currentPoint = _map.startPoint
-  const starterAdjacentPoints = _map.adjacentPoints(currentPoint)
+  currentPoint = map.startPoint
+  const starterAdjacentPoints = map.adjacentPoints(currentPoint)
 
   if (starterAdjacentPoints.length !== 1) {
     throw Error('Unable to determine initial direction')
@@ -31,19 +35,21 @@ function initializeStartPoint () {
 
   const nextPoint = starterAdjacentPoints.pop()
   direction = currentPoint.directionToPoint(nextPoint)
-  _map.setTraversed(currentPoint.x, currentPoint.y)
+  map.setTraversed(currentPoint.x, currentPoint.y)
 }
 
 function traverse () {
+  // do not go beyond the end marker
   if (currentPoint.isEndMarker()) {
     return
   }
 
+  // turn on a '+'
   if (currentPoint.isTurn()) {
     turn()
   }
 
-  const possibleNextPoints = _map.adjacentPoints(currentPoint).filter(
+  const possibleNextPoints = map.adjacentPoints(currentPoint).filter(
     point => !point.isSame(previousPoint)
   )
 
@@ -51,12 +57,18 @@ function traverse () {
     throw Error('Unable to move forward, path broken')
   }
 
+  /**
+   * Go forward if we can.
+   * If the current value is +, we've already turned.
+   *
+   * Otherwise, we've turned (on a letter), as letters are not turns automatically.
+   */
   for (const nextPoint of possibleNextPoints) {
     if (currentPoint.directionToPoint(nextPoint) === direction) {
       previousPoint = currentPoint
       currentPoint = nextPoint
 
-      _map.setTraversed(currentPoint.x, currentPoint.y)
+      map.setTraversed(currentPoint.x, currentPoint.y)
 
       return
     }
@@ -65,8 +77,13 @@ function traverse () {
   return turn()
 }
 
+/**
+ * Go either left or right from the current direction.
+ * The traverse function handles going forward but we still capture attempts to go forward
+ * if a direction change is not possible (the fake turn scenario).
+ */
 function turn () {
-  const adjacentPoints = _map.adjacentPoints(currentPoint).filter(
+  const adjacentPoints = map.adjacentPoints(currentPoint).filter(
     point => point.isDifferent(previousPoint)
   )
 
@@ -74,7 +91,7 @@ function turn () {
     const newDirection = currentPoint.directionToPoint(adjacentPoint)
 
     if (newDirection !== direction) {
-        accumulator = newDirection
+      accumulator = newDirection
     }
 
     return accumulator

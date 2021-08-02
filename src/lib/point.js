@@ -1,3 +1,16 @@
+/**
+ * Could/should have used a class here/everywhere else in place of the pure object approach.
+ *
+ * In my mind, there were two main approaches to tackling this challenge
+ *  - direct matrix manipulation
+ *    tracking things like traversal status separately
+ *    potential to end up messy with lots of off-by-one shenanigans
+ *    not that easy to read
+ *  - encapsulate everything as much as possible to make the code more readable
+ *    less performant
+ *
+ * Went with the second option, but not too happy about my decision.
+ */
 function Point (x, y, value) {
   this.x = x
   this.y = y
@@ -5,6 +18,10 @@ function Point (x, y, value) {
   this.traversed = false
 }
 
+/**
+ * The direction values might as well be enums.
+ * In the end, we're only comparing these values with themselves.
+ */
 Point.prototype.directionToPoint = function (point) {
   if (point.x > this.x) return 'r'
   if (point.x < this.x) return 'l'

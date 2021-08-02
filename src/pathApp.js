@@ -26,6 +26,12 @@ function main (path) {
   return pathFinder.findPath(map)
 }
 
+/**
+ * This is perhaps unnecessary complication,
+ * but it's possible to run it from both a CLI context and as a required module.
+ *
+ * The second case is nice for integration testing.
+ */
 if (require.main === module) {
   const args = process.argv.slice(2)
 
